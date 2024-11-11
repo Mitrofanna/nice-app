@@ -1,6 +1,11 @@
+import { CheckboxGroup } from './checkbox-group';
+export { FilterCheckbox } from './filter-checkbox';
+export { Filters } from './filters';
 export { TopBar } from './top-bar';
 export { Categories } from './categories';
 export { Container } from './container';
 export { Header } from './header';
 export { Title } from './title';
 export { SortPopup } from './sort-popup';
+export { RangeSlider } from './range-slider';
+export { CheckboxGroup } from './checkbox-group';
