@@ -28,13 +28,26 @@ export const CheckboxGroup: React.FC<Props> = ({
   className,
 }) => {
   const [showAll, setShowAll] = React.useState(false);
-  const ingredients = showAll ? items : defaultItems.slice(0, limit);
+  const [searchValue, setSearchValue] = React.useState('');
+
+  const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
+  const ingredients = showAll
+    ? items.filter((item) => item.text.toLowerCase().includes(searchValue.toLowerCase()))
+    : defaultItems.slice(0, limit);
+
   return (
     <div className={className}>
       <p className="mb-3 font-bold">{title}</p>
       {showAll && (
         <div className="mb-5">
-          <Input placeholder={searchInputPlaceholder} className="bg-gray-50 border-none" />
+          <Input
+            onChange={onChangeSearchInput}
+            placeholder={searchInputPlaceholder}
+            className="bg-gray-50 border-none"
+          />
         </div>
       )}
       <div className="flex flex-col gap-4 max-h-96 pr-2 overflow-auto scrollbar">
