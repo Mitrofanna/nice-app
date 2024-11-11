@@ -27,6 +27,30 @@ const filtersItems = [
     text: 'соленые огурцы',
     value: '6',
   },
+  {
+    text: 'грибы',
+    value: '4',
+  },
+  {
+    text: 'ветчина',
+    value: '5',
+  },
+  {
+    text: 'соленые огурцы',
+    value: '6',
+  },
+  {
+    text: 'грибы',
+    value: '4',
+  },
+  {
+    text: 'ветчина',
+    value: '5',
+  },
+  {
+    text: 'соленые огурцы',
+    value: '6',
+  },
 ];
 
 interface Props {

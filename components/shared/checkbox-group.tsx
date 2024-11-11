@@ -10,7 +10,7 @@ interface Props {
   title: string;
   items: Item[];
   defaultItems: Item[];
-  limit?: number;
+  limit: number;
   searchInputPlaceholder: string;
   onChange?: (values: string[]) => void;
   defaultValue?: string;
@@ -21,20 +21,24 @@ export const CheckboxGroup: React.FC<Props> = ({
   title,
   items,
   defaultItems,
-  limit = 5,
+  limit,
   searchInputPlaceholder = 'Поиск...',
   onChange,
   defaultValue,
   className,
 }) => {
+  const [showAll, setShowAll] = React.useState(false);
+  const ingredients = showAll ? items : defaultItems.slice(0, limit);
   return (
     <div className={className}>
       <p className="mb-3 font-bold">{title}</p>
-      <div className="mb-5">
-        <Input placeholder={searchInputPlaceholder} className="bg-gray-50 border-none" />
-      </div>
+      {showAll && (
+        <div className="mb-5">
+          <Input placeholder={searchInputPlaceholder} className="bg-gray-50 border-none" />
+        </div>
+      )}
       <div className="flex flex-col gap-4 max-h-96 pr-2 overflow-auto scrollbar">
-        {items.map((item, index) => (
+        {ingredients.map((item, index) => (
           <FilterCheckbox
             key={index}
             text={item.text}
@@ -45,6 +49,13 @@ export const CheckboxGroup: React.FC<Props> = ({
           />
         ))}
       </div>
+      {items.length > limit && (
+        <div className={showAll ? 'border-t border-t-neutral-100 mt-4' : ''}>
+          <button onClick={() => setShowAll(!showAll)} className="text-primary mt-3">
+            {showAll ? 'Скрыть' : 'Показать все'}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
