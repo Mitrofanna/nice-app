@@ -1,4 +1,3 @@
-import { CheckboxGroup } from './checkbox-group';
 export { FilterCheckbox } from './filter-checkbox';
 export { Filters } from './filters';
 export { TopBar } from './top-bar';
@@ -9,3 +8,5 @@ export { Title } from './title';
 export { SortPopup } from './sort-popup';
 export { RangeSlider } from './range-slider';
 export { CheckboxGroup } from './checkbox-group';
+export { ProductCard } from './product-card';
+export { ProductsList } from './products-list';
