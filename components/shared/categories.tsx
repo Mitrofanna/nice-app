@@ -1,6 +1,6 @@
 'use client';
 
-import { useCategoryStore } from '@/app/store/category';
+import { useCategoryStore } from '@/store/category';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
