@@ -12,6 +12,15 @@ model User {
     fullname String
     email String @unique
     password String
+    role UserRole @default(USER)
+    
+    cart Cart?
+    oreders Order[]
+    verificationCode VerificationCode?
+
+    provider String?//Если пользователь зарегистрирован через соцсеть
+    providerId String?
+   
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
@@ -20,7 +29,8 @@ model Category {
     id Int @id @default(autoincrement())
     name String @unique
     
-    products Product[]
+    products Product[]//one to many
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
@@ -30,8 +40,9 @@ model Product {
     name String
     imageUrl String
     
+    items ProductItem[]
     ingridients Ingridient[]//many to many
-    category Category @relation(fields: [categoryId], references: [id])//one to many
+    category Category @relation(fields: [categoryId], references: [id])//one to one
     categoryId Int
 
     createdAt DateTime @default(now())
@@ -44,8 +55,103 @@ model Ingridient {
     price Int
     imageUrl String
 
-    products Product[]
+    products Product[]//many to many
+    cartItems CartItem[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model ProductItem {
+    id Int @id @default(autoincrement())
+    price Int
+    size Int?
+    productType Int?
+
+    product Product @relation(fields: [productId], references: [id])
+    productId Int
+
+    cartItems CartItem[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Cart {
+    id Int @id @default(autoincrement())
+
+    totalAmount Int @default(0)
+
+    user User? @relation(fields: [userId], references: [id])//one to one
+    userId Int? @unique
+
+    cartItems CartItem[]
+
+    token String//в случе если пользователь не авторизован, корзина привяжется только к токену
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+    id Int @id @default(autoincrement())
+    quantity Int
+
+    cart Cart @relation(fields: [cartId], references: [id])
+    cartId Int
+
+    productItem ProductItem @relation(fields: [productItemId], references: [id])
+    productItemId Int
+
+    ingridients Ingridient[]
+    
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Order {
+    id Int @id @default(autoincrement())
+
+    user User? @relation(fields: [userId], references: [id])
+    userId Int?
+
+    token String
+
+    status OrderStatus
+    totalAmount Int
+    paymentId String?
+    items Json
+
+    fullName String
+    address String
+    phone String
+    email String
+    comment String?
+
+    createdAt DateTime @default(now())    
+    updatedAt DateTime @updatedAt
+}
+
+model VerificationCode {
+    id Int @id @default(autoincrement())
+
+    user User @relation(fields: [userId], references: [id])
+    userId Int @unique
+
+    code String
+
+    createdAt DateTime @default(now())  
+    @@unique([userId, code])
+}
+
+enum OrderStatus {
+    CREATED
+    DELIVERED
+    CANCELED
+}
+
+enum UserRole {
+    USER
+    ADMIN
 }
