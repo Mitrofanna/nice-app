@@ -13,6 +13,7 @@ model User {
     email String @unique
     password String
     role UserRole @default(USER)
+    verified DateTime @default(now())
     
     cart Cart?
     oreders Order[]
@@ -41,7 +42,7 @@ model Product {
     imageUrl String
     
     items ProductItem[]
-    ingridients Ingridient[]//many to many
+    ingredients Ingredient[]//many to many
     category Category @relation(fields: [categoryId], references: [id])//one to one
     categoryId Int
 
@@ -49,7 +50,7 @@ model Product {
     updatedAt DateTime @updatedAt
 }
 
-model Ingridient {
+model Ingredient {
     id Int @id @default(autoincrement())
     name String
     price Int
@@ -103,7 +104,7 @@ model CartItem {
     productItem ProductItem @relation(fields: [productItemId], references: [id])
     productItemId Int
 
-    ingridients Ingridient[]
+    ingredients Ingredient[]
     
 
     createdAt DateTime @default(now())
