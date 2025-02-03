@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { FilterCheckbox, FilterCheckboxProps } from './filter-checkbox';
-import { Input } from '../ui';
+import { Input, Skeleton } from '../ui';
 
 type Item = FilterCheckboxProps;
 
@@ -15,6 +15,7 @@ interface Props {
   onChange?: (values: string[]) => void;
   defaultValue?: string;
   className?: string;
+  loading?: boolean;
 }
 
 export const CheckboxGroup: React.FC<Props> = ({
@@ -26,6 +27,7 @@ export const CheckboxGroup: React.FC<Props> = ({
   onChange,
   defaultValue,
   className,
+  loading,
 }) => {
   const [showAll, setShowAll] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState('');
@@ -33,6 +35,17 @@ export const CheckboxGroup: React.FC<Props> = ({
   const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+
+  if (loading) {
+    return (
+      <div className={className}>
+        <p className="mb-3 font-bold">{title}</p>
+        {...Array(limit)
+          .fill(0)
+          .map((_, index) => <Skeleton className="h-6 mb-4 rounded-[8px]" />)}
+      </div>
+    );
+  }
 
   const ingredients = showAll
     ? items.filter((item) => item.text.toLowerCase().includes(searchValue.toLowerCase()))
