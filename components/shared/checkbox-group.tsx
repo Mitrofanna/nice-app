@@ -12,10 +12,12 @@ interface Props {
   defaultItems: Item[];
   limit: number;
   searchInputPlaceholder: string;
-  onChange?: (values: string[]) => void;
+  onClickCheckbox?: (id: string) => void;
   defaultValue?: string;
   className?: string;
   loading?: boolean;
+  selectedIds?: Set<string>;
+  name?: string;
 }
 
 export const CheckboxGroup: React.FC<Props> = ({
@@ -24,10 +26,12 @@ export const CheckboxGroup: React.FC<Props> = ({
   defaultItems,
   limit,
   searchInputPlaceholder = 'Поиск...',
-  onChange,
+  onClickCheckbox,
   defaultValue,
   className,
   loading,
+  selectedIds,
+  name,
 }) => {
   const [showAll, setShowAll] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState('');
@@ -70,8 +74,9 @@ export const CheckboxGroup: React.FC<Props> = ({
             text={item.text}
             value={item.value}
             endAdornment={item.endAdornment}
-            checked={false}
-            onCheckedChange={(id) => console.log(id)}
+            checked={selectedIds?.has(item.value)} //проверит наличие выбранного ингредиента в сете выбранных
+            onCheckedChange={() => onClickCheckbox?.(item.value)}
+            name={name}
           />
         ))}
       </div>

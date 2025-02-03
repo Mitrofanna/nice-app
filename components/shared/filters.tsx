@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
-  const { ingredients, loading } = useFilterIngredients();
+  const { ingredients, loading, selectedIds, onAddId } = useFilterIngredients();
   const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
 
   return (
@@ -36,6 +36,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
         className="mt-5"
         limit={6}
         loading={loading}
+        onClickCheckbox={onAddId}
+        selectedIds={selectedIds}
+        name={'ingredients'}
       />
     </div>
   );
