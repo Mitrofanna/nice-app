@@ -6,7 +6,7 @@ import { useSet } from 'react-use';
 interface ReturnProps {
   ingredients: Ingredient[];
   loading: boolean;
-  selectedIds: Set<string>; //все id выбранных чекбоксов
+  selected: Set<string>; //все id выбранных чекбоксов
   onAddId: (id: string) => void;
 }
 
@@ -14,7 +14,7 @@ export const useFilterIngredients = (): ReturnProps => {
   const [ingredients, setIngredients] = React.useState<Ingredient[]>([]);
   const [loading, setLoading] = React.useState(true);
 
-  const [selectedIds, { toggle }] = useSet(new Set<string>([]));
+  const [selected, { toggle }] = useSet(new Set<string>([]));
 
   React.useEffect(() => {
     async function fetchIngredients() {
@@ -30,5 +30,5 @@ export const useFilterIngredients = (): ReturnProps => {
     }
     fetchIngredients();
   }, []);
-  return { ingredients, loading, selectedIds, onAddId: toggle };
+  return { ingredients, loading, selected, onAddId: toggle };
 };

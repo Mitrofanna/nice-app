@@ -9,14 +9,14 @@ type Item = FilterCheckboxProps;
 interface Props {
   title: string;
   items: Item[];
-  defaultItems: Item[];
+  defaultItems?: Item[];
   limit: number;
-  searchInputPlaceholder: string;
+  searchInputPlaceholder?: string;
   onClickCheckbox?: (id: string) => void;
   defaultValue?: string;
   className?: string;
   loading?: boolean;
-  selectedIds?: Set<string>;
+  selected?: Set<string>;
   name?: string;
 }
 
@@ -30,7 +30,7 @@ export const CheckboxGroup: React.FC<Props> = ({
   defaultValue,
   className,
   loading,
-  selectedIds,
+  selected,
   name,
 }) => {
   const [showAll, setShowAll] = React.useState(false);
@@ -53,7 +53,7 @@ export const CheckboxGroup: React.FC<Props> = ({
 
   const ingredients = showAll
     ? items.filter((item) => item.text.toLowerCase().includes(searchValue.toLowerCase()))
-    : defaultItems.slice(0, limit);
+    : (defaultItems || items).slice(0, limit);
 
   return (
     <div className={className}>
@@ -74,7 +74,7 @@ export const CheckboxGroup: React.FC<Props> = ({
             text={item.text}
             value={item.value}
             endAdornment={item.endAdornment}
-            checked={selectedIds?.has(item.value)} //проверит наличие выбранного ингредиента в сете выбранных
+            checked={selected?.has(item.value)} //проверит наличие выбранного ингредиента в сете выбранных
             onCheckedChange={() => onClickCheckbox?.(item.value)}
             name={name}
           />
