@@ -10,11 +10,11 @@ interface ReturnProps {
   onAddId: (id: string) => void;
 }
 
-export const useFilterIngredients = (): ReturnProps => {
+export const useFilterIngredients = (values: string[] = []): ReturnProps => {
   const [ingredients, setIngredients] = React.useState<Ingredient[]>([]);
   const [loading, setLoading] = React.useState(true);
 
-  const [selected, { toggle }] = useSet(new Set<string>([]));
+  const [selected, { toggle }] = useSet(new Set<string>(values));
 
   React.useEffect(() => {
     async function fetchIngredients() {

@@ -1,30 +1,51 @@
 'use client';
 
 import React from 'react';
-import { FilterCheckbox, Title, RangeSlider, CheckboxGroup } from '.';
+import { Title, RangeSlider, CheckboxGroup } from '.';
 import { Input } from '../ui';
 import { useFilterIngredients } from '@/hooks/useFilterIngredients';
 import { useSet } from 'react-use';
+import qs from 'qs';
+import { comma } from 'postcss/lib/list';
+import { useRouter, useSearchParams } from 'next/navigation';
+import QueryString from 'qs';
 
 interface Props {
   className?: string;
 }
 
 interface PriceProps {
-  priceFrom: number;
-  priceTo: number;
+  priceFrom?: number;
+  priceTo?: number;
+}
+
+interface QueryFilters extends PriceProps {
+  selectedSizes: string;
+  selectedTypes: string;
+  selected: string;
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
-  const { ingredients, loading, selected, onAddId } = useFilterIngredients();
+  const searchParams = useSearchParams() as unknown as Map<keyof QueryFilters, string>;
+  const router = useRouter();
+  const { ingredients, loading, selected, onAddId } = useFilterIngredients(
+    searchParams.get('selected')?.split(','),
+  );
+
   const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
+
   const [price, setPrice] = React.useState<PriceProps>({
-    priceFrom: 0,
-    priceTo: 1000,
+    priceFrom: Number(searchParams.get('priceFrom')) || undefined,
+    priceTo: Number(searchParams.get('priceTo')) || undefined,
   });
 
-  const [selectedSizes, { toggle: toggleSize }] = useSet(new Set<string>([]));
-  const [selectedTypes, { toggle: toggleType }] = useSet(new Set<string>([]));
+  const [selectedSizes, { toggle: toggleSize }] = useSet(
+    new Set<string>(searchParams.get('selectedSizes')?.split(',') || []),
+  );
+
+  const [selectedTypes, { toggle: toggleType }] = useSet(
+    new Set<string>(searchParams.get('selectedTypes')?.split(',') || []),
+  );
 
   const updatePrice = (name: keyof PriceProps, value: number) => {
     setPrice({
@@ -34,8 +55,17 @@ export const Filters: React.FC<Props> = ({ className }) => {
   };
 
   React.useEffect(() => {
-    console.log(selectedSizes, selectedTypes, price, selected);
-  }, [selectedSizes, selectedTypes, price, selected]);
+    const filters = {
+      ...price,
+      selectedSizes: Array.from(selectedSizes),
+      selectedTypes: Array.from(selectedTypes),
+      selected: Array.from(selected),
+    };
+    const query = qs.stringify(filters, { arrayFormat: 'comma' });
+    router.push(`?${query}`, { scroll: false });
+  }, [selectedSizes, selectedTypes, price, selected, router]);
+
+  console.log(searchParams);
 
   return (
     <div className={className}>
@@ -95,7 +125,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
           min={0}
           max={1000}
           step={10}
-          value={[price.priceFrom, price.priceTo]}
+          value={[price.priceFrom || 0, price.priceTo || 1000]}
           onValueChange={([priceFrom, priceTo]) => setPrice({ priceFrom, priceTo })}
         />
       </div>
