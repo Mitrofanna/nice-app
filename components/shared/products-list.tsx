@@ -8,7 +8,7 @@ import { useCategoryStore } from '@/store/category';
 
 interface Props {
   title: string;
-  products: any[];
+  items: any[];
   categoryId: number;
   classname?: string;
   listClassName?: string;
@@ -16,7 +16,7 @@ interface Props {
 
 export const ProductsList: React.FC<Props> = ({
   title,
-  products,
+  items,
   categoryId,
   classname,
   listClassName,
@@ -38,7 +38,7 @@ export const ProductsList: React.FC<Props> = ({
     <div className={classname} id={title} ref={intersectionRef}>
       <Title text={title} size="lg" className="font-extrabold mb-5" />
       <div className={cn('grid grid-cols-3 gap-[50px]', listClassName)}>
-        {products.map((product) => (
+        {items.map((product) => (
           <ProductCard
             key={product.id}
             id={product.id}

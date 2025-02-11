@@ -6,7 +6,7 @@ export const categories = [
     name: 'Пицца',
   },
   {
-    name: 'Бургеры',
+    name: 'Десерты',
   },
   {
     name: 'Коктейли',
@@ -15,7 +15,7 @@ export const categories = [
     name: 'Напитки',
   },
   {
-    name: 'Десерты',
+    name: 'Бургеры',
   },
 ];
 
@@ -82,12 +82,12 @@ export const products = [
     imageUrl: 'https://media.dodostatic.net/image/r:584x584/0193bb2bfe2a716597c66396669cf5c4.avif',
   },
   {
-    categoryId: 2,
+    categoryId: 3,
     name: 'Сырники с малиновым вареньем',
     imageUrl: 'https://media.dodostatic.net/image/r:584x584/11ef9060f35d7c26bf41590b9079febe.avif',
   },
   {
-    categoryId: 6,
+    categoryId: 3,
     name: 'Сырники',
     imageUrl: 'https://media.dodostatic.net/image/r:584x584/11ef9060dd723610942e8f368b03540a.avif',
   },
@@ -97,12 +97,12 @@ export const products = [
     imageUrl: 'https://media.dodostatic.net/image/r:584x584/11ee7d61b12220ab911ff4fa42ef585d.avif',
   },
   {
-    categoryId: 6,
+    categoryId: 3,
     name: 'Маффин с арахисом',
     imageUrl: 'https://media.dodostatic.net/image/r:584x584/11ee79700c2ea0539d556ccf3da1feb7.avif',
   },
   {
-    categoryId: 6,
+    categoryId: 3,
     name: 'Макарон с манго',
     imageUrl: 'https://media.dodostatic.net/image/r:584x584/11ef8c97600099aabe2eab81a37c62d1.avif',
   },
@@ -112,7 +112,7 @@ export const products = [
     imageUrl: 'https://media.dodostatic.net/image/r:584x584/11eecf75072bd81390b9c29dd01666c3.avif',
   },
   {
-    categoryId: 3,
+    categoryId: 6,
     name: 'Бургер',
     imageUrl: 'https://media.dodostatic.net/image/r:584x584/11ee796ff041fe1f94c903576dcfd01e.avif',
   },
