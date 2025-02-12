@@ -1,3 +1,4 @@
+import { GroupVariants } from './group-variants';
 export { FilterCheckbox } from './filter-checkbox';
 export { Filters } from './filters';
 export { TopBar } from './top-bar';
@@ -11,3 +12,5 @@ export { CheckboxGroup } from './checkbox-group';
 export { ProductCard } from './product-card';
 export { ProductsList } from './products-list';
 export { SearchInput } from './search-input';
+export { ProductImage } from './product-image';
+export { GroupVariants } from './group-variants';
