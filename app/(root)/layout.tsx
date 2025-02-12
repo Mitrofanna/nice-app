@@ -7,15 +7,18 @@ export const metadata: Metadata = {
   description: 'Приложение доставки еды',
 };
 
-export default function RootLayout({
+export default function HomeLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <main className="min-h-screen">
       <Header />
       {children}
+      {modal}
     </main>
   );
 }

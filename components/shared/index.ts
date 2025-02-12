@@ -1,4 +1,3 @@
-import { GroupVariants } from './group-variants';
 export { FilterCheckbox } from './filter-checkbox';
 export { Filters } from './filters';
 export { TopBar } from './top-bar';
@@ -14,3 +13,6 @@ export { ProductsList } from './products-list';
 export { SearchInput } from './search-input';
 export { ProductImage } from './product-image';
 export { GroupVariants } from './group-variants';
+export { ProductModal } from './product-modal';
+export { ProductForm } from './product-form';
+export { PizzaForm } from './pizza-form';
